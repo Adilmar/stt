@@ -1,0 +1,22 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[packages]
+
+Flask = "*"
+Flask-RESTful = "*"
+flask_cors = "*"
+requests = "*"
+Pillow   = "*"
+uuid     = "*"
+numpy    = "*"
+pydub    = "*"
+SpeechRecognition= "*"
+
+
+[requires]
+
+python_version = "3.6"
