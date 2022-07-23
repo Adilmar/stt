@@ -13,7 +13,6 @@ from werkzeug.wrappers import response
 import speech_recognition as sr
 from pydub import AudioSegment
 
-
 cabecario = f'''
 
  _____                _  ______            
