@@ -24,7 +24,7 @@ cabecario = f'''
 \____/ \___|_| |_|\__,_|\_____/\__,_| .__/ 
                                     | |    
                                     |_|   
-      Módulo:    OUVI BRASIL (API)
+      Módulo:    STT - TTS
       Developer: Dr Adilmar Coelho Dantas 
       Web:       www.adilmar.com.br                                      
 '''
