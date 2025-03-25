@@ -1,2 +1,2 @@
 # stt
-STT API - Google e Microsoft
+STT API - Google & Wit IA 

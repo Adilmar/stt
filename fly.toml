@@ -1,0 +1,26 @@
+# fly.toml file generated for tutorial-bot on 2022-08-28T09:30:27-06:00
+
+app = "stt"
+kill_signal = "SIGINT"
+processes = []
+
+[http_service]
+auto_start_machines = true
+auto_stop_machines = true
+force_https = true
+min_machines_running = 0
+
+[env]
+
+[[services]]
+  internal_port = 5000
+  protocol = "tcp"
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
