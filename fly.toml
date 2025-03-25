@@ -1,6 +1,6 @@
 # fly.toml file generated for tutorial-bot on 2022-08-28T09:30:27-06:00
 
-app = "stt"
+app = "stt-ia"
 kill_signal = "SIGINT"
 processes = []
 
