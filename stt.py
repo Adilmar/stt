@@ -37,8 +37,8 @@ TOKEN_BOT_HUB = "Token 2274b1aec12962f7980aa374485f0c0479710692"
 BASE_URL = f"https://api.telegram.org/bot1626167634:AAFX_qyIXbeSB6Ciq481ZUBZOUtr8QaY0Ww"
 FILE_BASE_URL = f"https://api.telegram.org/file/bot1626167634:AAFX_qyIXbeSB6Ciq481ZUBZOUtr8QaY0Ww"
 
-CHATWOOT_URL = "https://chatwoot-evolution-api.9grgnc.easypanel.host/chat/getBase64FromMediaMessage/Amanda"
-CHATWOOT_API_KEY = "1D4BC0232CAC-4F11-8644-54782A9F4940"
+CHATWOOT_URL = "https://chatwoot-evolution-api.9grgnc.easypanel.host/chat/getBase64FromMediaMessage"
+
 WIT_AI_URL = "https://api.wit.ai/speech?v=20221114"
 WIT_AI_TOKEN = "SZYPKFBBSKLLAPYGMRR5QEAFQIWRKBH7"
 
@@ -62,16 +62,17 @@ def extract_last_text(response):
     return texts[-1] if texts else ""  # Retorna o último texto encontrado ou string vazia
 
 
-def fetch_media_base64(message_id):
+def fetch_media_base64(message_id, api_key, instance):
+    URL = F"{CHATWOOT_URL}/{instance}"
     payload = {
         "message": {"key": {"id": message_id}},
         "convertToMp4": False
     }
     headers = {
-        "apikey": CHATWOOT_API_KEY,
+        "apikey": api_key,
         "Content-Type": "application/json"
     }
-    response = requests.post(CHATWOOT_URL, json=payload, headers=headers).json()
+    response = requests.post(URL, json=payload, headers=headers).json()
     return response 
 
 
@@ -144,7 +145,6 @@ def wav(url):
 
   return response
 
-
 def transcreve_audio(nome_audio):
     # Selecione o audio para reconhecimento
     r = sr.Recognizer()
@@ -166,7 +166,6 @@ def transcreve_audio(nome_audio):
 
     return response
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -187,8 +186,10 @@ def process_message():
     content = request.json
     try:
         message_id = content["message_id"]
+        api_key = content["api_key"]
+        instance = str(content["instance"])
 
-        media_data = fetch_media_base64(message_id)
+        media_data = fetch_media_base64(message_id, api_key, instance)
         if not media_data:
             return jsonify({"error": "Failed to fetch media"}), 500
 
