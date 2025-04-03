@@ -1,26 +1,28 @@
-# fly.toml file generated for tutorial-bot on 2022-08-28T09:30:27-06:00
-
 app = "stt-ia"
 kill_signal = "SIGINT"
-processes = []
+primary_region = "sjc"
 
 [http_service]
 auto_start_machines = true
 auto_stop_machines = true
 force_https = true
+internal_port = 5_000
 min_machines_running = 0
-
-[env]
+processes = [ "app" ]
 
 [[services]]
-  internal_port = 5000
-  protocol = "tcp"
+internal_port = 5_000
+protocol = "tcp"
 
   [[services.ports]]
-    handlers = ["http"]
-    port = "80"
+  handlers = [ "http" ]
+  port = 80
 
   [[services.ports]]
-    handlers = ["tls", "http"]
-    port = "443"
+  handlers = [ "tls", "http" ]
+  port = 443
 
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory = "256"

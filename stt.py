@@ -61,7 +61,6 @@ def extract_last_text(response):
 
     return texts[-1] if texts else ""  # Retorna o último texto encontrado ou string vazia
 
-
 def fetch_media_base64(message_id, api_key, instance):
     URL = F"{CHATWOOT_URL}/{instance}"
     payload = {
@@ -75,7 +74,6 @@ def fetch_media_base64(message_id, api_key, instance):
     response = requests.post(URL, json=payload, headers=headers).json()
     return response 
 
-
 def convert_ogg_to_wav(base64_audio):
     ogg_bytes = base64.b64decode(base64_audio)
     with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as ogg_file:
@@ -87,7 +85,6 @@ def convert_ogg_to_wav(base64_audio):
     audio.export(wav_path, format="wav")
     os.remove(ogg_path)
     return wav_path
-
 
 def transcribe_audio(file_path):
     headers = {
@@ -101,7 +98,6 @@ def transcribe_audio(file_path):
     print("xx",response)
     
     return response
-
 
 def send_message(message, chat_id):
     content = {"text": message.encode("utf-8"), "chat_id": chat_id}
@@ -127,7 +123,6 @@ def send_message(message, chat_id):
     print("Mensagens enviadas", response.text)
 
     return response
-
 
 def wav(url):
   url = str(url)
