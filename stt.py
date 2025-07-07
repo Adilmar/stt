@@ -161,6 +161,53 @@ def transcreve_audio(nome_audio):
 
     return response
 
+def generate_iptv(token, phone):
+    url = "https://mcapi.knewcms.com:2087/lines/test"
+
+    notes = f"AmandaTv-{phone}"
+
+    payload = json.dumps({
+        "notes": notes,
+        "package_p2p": "64399dca5ea59e8a1de2b083",
+        "krator_package": "1",
+        "package_iptv": 70,
+        "testDuration": 4
+    })
+
+    headers = {
+    'Authorization': token,
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload).json()
+
+    return response
+
+
+def login_iptv(username, password, phone):
+    url = "https://mcapi.knewcms.com:2087/auth/login"
+
+    payload = json.dumps({
+        "username": username,
+        "password": password,
+        "twoFacToken": ""
+    })
+
+    headers = {
+    'Content-Type': 'application/json'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload).json()
+
+    token = str(response["token"])
+
+    token = f"Bearer {token}"
+
+    response = generate_iptv(token, phone)
+
+    return response
+
+
 app = Flask(__name__)
 CORS(app)
 
@@ -206,6 +253,18 @@ def process_message():
     
     return response
 
+@app.route('/user-iptv', methods=['GET', 'POST'])
+def loginip():
+    if request.method == 'POST':
+        content = request.json
+
+        phone = str(content["phone"])
+        username = str(content["username"])
+        password = str(content["password"])
+
+        response = login_iptv(username, password, phone)
+
+        return response
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
